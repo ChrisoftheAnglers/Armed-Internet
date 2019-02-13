@@ -6,7 +6,9 @@
   "author": "Christian",
   "license": "MIT",
   "dependencies": {
+    "@material-ui/core": "^3.9.2",
     "express": "^4.16.4",
+    "firebase": "^5.8.2",
     "mongoose": "^5.4.9",
     "morgan": "^1.9.1"
   }

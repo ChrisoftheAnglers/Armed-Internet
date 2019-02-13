@@ -1,24 +1,28 @@
-var express = require('express');
-var logger = require('morgan');
-var mongoose = require('mongoose');
-var port = 3001;
+const express = require('express');
+const logger = require('morgan');
+//const mongoose = require('mongoose');
+const routes = require('./routes');
+const PORT = process.env. PORT || 3001;
 
 var app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-app.use(express.static('public'));
+if (process.env.NODE_ENV === "production") {
+    app.use(express.static('client/build'));
+}
 
 app.use(logger('dev'));
 
-// Connect to the Mongo DB
-mongoose.connect("mongodb://localhost/arduino", { useNewUrlParser: true });
+// Connect to the Mongo DB (not used in current version)
+/* mongoose.connect("mongodb://localhost/arduino", { useNewUrlParser: true }); */
 
-// Import routes
-app.use('/api/arduino', require('./controllers/arduinoRoutes.js'));
+// Import routes for API (currently not in use) and React build
+app.use(routes);
 
 // Start server
-app.listen(port, function () {
-    console.log('Example app listening on port ' + port);
-});
+app.listen(PORT, () =>
+  console.log(`🌎  ==> API Server now listening on PORT ${PORT}!`)
+);
+
