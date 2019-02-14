@@ -9,9 +9,10 @@ const app = express();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-// Not using boilerplate, so looking for NODE_ENV won't work
-app.use(express.static('client/build'));
-
+// Using boilerplate
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static('client/build'));
+}
 // Connect to the Mongo DB (not used in current version)
 /* mongoose.connect("mongodb://localhost/arduino", { useNewUrlParser: true }); */
 
