@@ -1,6 +1,6 @@
 // Dependencies
-var router = require('express').Router();
-var Arduino = require('../../models/arduino.js');
+const router = require('express').Router();
+const Arduino = require('../../models/arduino.js');
 
 // Basic path to get all information currently in collection
 router.get('/', function(req, res) {
