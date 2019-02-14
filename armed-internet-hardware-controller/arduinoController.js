@@ -70,13 +70,14 @@ board.on('ready', function() {
     }); */
 
     // TODO: event function to get info from database and use it to change servo position as necessary
-    function servoMovement(update) {
-        Braccio.base.to(update.servos.base);
-        Braccio.elbow.to(update.servos.elbow);
-        Braccio.gripper.to(update.servos.gripper);
-        Braccio.shoulder.to(update.servos.shoulder);
-        Braccio.wrist_rot.to(update.servos.wristRot);
-        Braccio.wrist_ver.to(update.servos.wristVert);
+    function servoMovement(data) {
+        console.log(data);
+        Braccio.base.to(data.servos.base);
+        Braccio.elbow.to(data.servos.elbow);
+        Braccio.gripper.to(data.servos.gripper);
+        Braccio.shoulder.to(data.servos.shoulder);
+        Braccio.wrist_rot.to(data.servos.wristRot);
+        Braccio.wrist_ver.to(data.servos.wristVert);
     }
 
     // Initialize LED variables
@@ -85,9 +86,9 @@ board.on('ready', function() {
     let blink = false;
 
     // Function for controlling LED called by Firebase changes
-    function ledSwitch(update) {
-        power = update.val().ledPower;
-        blink = update.val().ledBlink;
+    function ledSwitch(data) {
+        power = data.ledPower;
+        blink = data.ledBlink;
         if (power && blink) {
             led.blink(500); //500 ms interval
         }
@@ -105,12 +106,32 @@ board.on('ready', function() {
 
     // Function to get request from Firebase and play Piezo tune
     function playtune(update) {
+        console.log(update);
         if (update.playTrack1 === true) {
+            piezo.play({
+                song: [
+                    ["C4", 1/5],
+                    ["D4", 1/5],
+                    ["E4", 1/5],
+                    ["G4", 1/5],
+                    ["D4", 1/5]
+                ],
+                tempo: 50
+            })
             firebase.database().ref().update({
                 playTrack1: false
             })
         }
         else if (update.playTrack2 === true) {
+            piezo.play({
+                song: [
+                    ["C4", 3/8],
+                    ["D4", 1/8],
+                    ["E4", 1/4],
+                    ["E4", 1/4]
+                ],
+                tempo: 30
+            })
             firebase.database().ref().update({
                 playTrack2: false
             })
@@ -119,10 +140,10 @@ board.on('ready', function() {
 
     // Event function for Firebase update on value which will return the object containing the necessary information
     firebase.database().ref().on("value", function(update) {
-        console.log(update);
-        ledSwitch(update);
-        servoMovement(update);
-        playtune(update);
+        console.log(update.val());
+        ledSwitch(update.val());
+        servoMovement(update.val());
+        playtune(update.val());
     }, function(error) {
         console.log("Error Code: " + error.code);
     })
