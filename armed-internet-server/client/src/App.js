@@ -24,20 +24,30 @@ firebase.database().ref().set({
       gripper: 90
   },
   ledPower: false,
-  ledBlink: false
+  ledBlink: false,
+  playTrack1: false,
+  playTrack2: false
 });
 
 class App extends Component {
   render() {
     return (
       <div className="App">
-        <header>
-          <h1 className="text-center">Arduino Commander</h1>
+        <header className="bg-info container-fluid">
+          <h1 className="text-center text-light">Arduino Commander</h1>
         </header>
-        <main className="container">
-          <Led />
-          <Servos />
-          <PiezoButtons />
+        <main className="container bg-light">
+          <div className="row">
+            <div className="col-4">
+              <Led />
+            </div>
+            <div className="col-4">
+              <Servos />
+            </div>
+            <div className="col-4">
+              <PiezoButtons />
+            </div>
+          </div>
         </main>
       </div>
     );

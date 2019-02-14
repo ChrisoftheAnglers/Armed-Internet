@@ -13,7 +13,6 @@ class Switches extends Component {
         // AFTERWORDS should be set as a callback or promise
         this.setState({[name]: event.target.checked},
             () => {
-                console.log(this.state);
                 firebase.database().ref().update({
                     ledPower: this.state.checkedPower,
                     ledBlink: this.state.checkedBlink
@@ -24,18 +23,19 @@ class Switches extends Component {
     render() {
         return (
             <div>
+                <h3>Led Switches</h3>
                 <Switch 
                     checked = {this.state.checkedPower}
                     onChange = {this.handleChange('checkedPower')}
                     value = "checkedPower"
                     color = "primary"
-                />
+                /><span>Power</span>
                 <Switch 
                     checked = {this.state.checkedBlink}
                     onChange = {this.handleChange('checkedBlink')}
                     value = 'checkedBlink'
                     color = 'secondary'
-                />
+                /><span>Blink</span>
             </div>
         )
     }

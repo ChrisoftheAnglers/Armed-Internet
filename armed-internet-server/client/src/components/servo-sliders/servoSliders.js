@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Component } from 'react';
 import firebase from 'firebase';
 import Slider from '@material-ui/lab/Slider';
 import PropTypes from 'prop-types';
@@ -14,7 +14,7 @@ const styles = {
     }
 };
 
-class StepSliders extends React.Component {
+class StepSliders extends Component {
     state = {
         base: 0,
         shoulder: 90,
@@ -24,14 +24,15 @@ class StepSliders extends React.Component {
         gripper: 90
     };
 
+    stop = false;
+
     handleChange = name => (event, value) => {
-        this.setState({[name]: value},
-            () => console.log(this.state));
-    };
+        this.setState({[name]: value});
+        };
 
     // This will write our value to Firebase
-    handleDragStop = name => (event, value) => {
-        console.log(this.state);
+    handleDragStop = event => {
+        console.log(event);
         firebase.database().ref().update({
             servos: this.state
         });
@@ -43,6 +44,7 @@ class StepSliders extends React.Component {
 
         return (
             <div className = {classes.root}>
+                <h3>Servo Controls</h3>
                 <Typography id = "base">Base</Typography>
                 <Slider 
                     classes = {{container: classes.slider}}
@@ -52,7 +54,7 @@ class StepSliders extends React.Component {
                     max = {180}
                     step = {1}
                     onChange = {this.handleChange("base")}
-                    onDragEnd = {this.handleDragStop("base")}
+                    onDragEnd = {this.handleDragStop}
                 />
                 <Typography id = "shoulder">Shoulder</Typography>
                 <Slider
@@ -63,7 +65,7 @@ class StepSliders extends React.Component {
                     max = {180}
                     step = {1}
                     onChange = {this.handleChange("shoulder")}
-                    onDragEnd = {this.handleDragStop("shoulder")}
+                    onDragEnd = {this.handleDragStop}
                 />
                 <Typography id = "elbow">Elbow</Typography>
                 <Slider 
@@ -74,7 +76,7 @@ class StepSliders extends React.Component {
                     max = {180}
                     step = {1}
                     onChange = {this.handleChange("elbow")}
-                    onDragEnd = {this.handleDragStop("elbow")}
+                    onDragEnd = {this.handleDragStop}
                 />
                 <Typography id = "wristVert">Wrist (vertical)</Typography>
                 <Slider 
@@ -85,7 +87,7 @@ class StepSliders extends React.Component {
                     max = {180}
                     step = {1}
                     onChange = {this.handleChange("wristVert")}
-                    onDragEnd = {this.handleDragStop("wristVert")}
+                    onDragEnd = {this.handleDragStop}
                 />
                 <Typography id = "wristRot">Wrist Rotation</Typography>
                 <Slider 
@@ -96,7 +98,7 @@ class StepSliders extends React.Component {
                     max = {180}
                     step = {1}
                     onChange = {this.handleChange("wristRot")}
-                    onDragEnd = {this.handleDragStop("wristRot")}
+                    onDragEnd = {this.handleDragStop}
                 />
                 <Typography id = "gripper">Gripper</Typography>
                 <Slider 
@@ -107,7 +109,7 @@ class StepSliders extends React.Component {
                     max = {180}
                     step = {1}
                     onChange = {this.handleChange("gripper")}
-                    onDragEnd = {this.handleDragStop("gripper")}
+                    onDragEnd = {this.handleDragStop}
                 />
             </div>
         );
