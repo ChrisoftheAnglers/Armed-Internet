@@ -4,6 +4,7 @@
   "description": "Server which will load control site for user (done in React) and which will send user input data to a Mongo Database.",
   "main": "server.js",
   "scripts": {
+    "build": "cd client && npm run build",
     "heroku-postbuild": "npm run build"
   },
   "author": "Christian",
