@@ -21,7 +21,7 @@ firebase.database().ref().set({
       elbow: 90,
       wristVert: 90,
       wristRot: 90,
-      gripper: 90
+      gripper: 10
   },
   ledPower: false,
   ledBlink: false,

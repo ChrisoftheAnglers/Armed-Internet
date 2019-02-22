@@ -21,21 +21,24 @@ class StepSliders extends Component {
         elbow: 90,
         wristVert: 90,
         wristRot: 90,
-        gripper: 90
+        gripper: 10
     };
 
     stop = false;
 
     handleChange = name => (event, value) => {
         this.setState({[name]: value});
+        firebase.database().ref().update({
+            servos: this.state
+        });
         };
 
     // This will write our value to Firebase
     handleDragStop = event => {
-        console.log(event);
+        /* console.log(event);
         firebase.database().ref().update({
             servos: this.state
-        });
+        }); */
     }
 
     render() {
@@ -61,8 +64,8 @@ class StepSliders extends Component {
                     classes = {{container: classes.slider}}
                     value = {shoulder}
                     aria-labelledby = "shoulder"
-                    min = {0}
-                    max = {180}
+                    min = {15}
+                    max = {165}
                     step = {1}
                     onChange = {this.handleChange("shoulder")}
                     onDragEnd = {this.handleDragStop}
@@ -105,8 +108,8 @@ class StepSliders extends Component {
                     classes = {{container: classes.slider}}
                     value = {gripper}
                     aria-labelledby = "gripper"
-                    min = {0}
-                    max = {180}
+                    min = {10}
+                    max = {73}
                     step = {1}
                     onChange = {this.handleChange("gripper")}
                     onDragEnd = {this.handleDragStop}

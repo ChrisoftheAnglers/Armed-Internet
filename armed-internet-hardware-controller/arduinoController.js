@@ -21,7 +21,8 @@ board.on('ready', function() {
     let Braccio = {
             gripper: new five.Servo({
             pin: 3,
-            startAt: 73
+            startAt: 73,
+            range: [10, 73]
             }),
             wrist_rot: new five.Servo({
                 pin: 6,
@@ -37,7 +38,8 @@ board.on('ready', function() {
             }),
             shoulder: new five.Servo({
                 pin: 10,
-                startAt: 40
+                startAt: 40,
+                range: [15, 165]
             }),
             base: new five.Servo({
                 pin: 11,
